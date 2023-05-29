@@ -1,8 +1,8 @@
 <script setup>
-
+import HeaderOne from '../components/HeaderOne.vue';
 
 </script>
 
 <template>
-    <h1>this is home</h1>
+    <HeaderOne/>
 </template>
