@@ -3,7 +3,7 @@ import HeaderOne from '../components/HeaderOne.vue';
 import CreateUser from '../components/CreateUser.vue';
 import { ref } from 'vue';
 
-const showCreateUser=ref(false)
+const showCreateUser=ref(true)
 
 const toogleCreateUser=()=>{
     showCreateUser.value=!showCreateUser.value
@@ -13,7 +13,7 @@ const toogleCreateUser=()=>{
 
 <template>
     <HeaderOne/>
-    <CreateUser/>
+    <CreateUser @close-the-form="handleCloseTheForm" v-if="showCreateUser"/>
     <main class="w-full py-5 px-10 min-h-screen">
         <div class="flex flex-col gap-10 mt-5 mb-5">
             <!-- the searching engine -->
