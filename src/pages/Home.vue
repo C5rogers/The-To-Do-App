@@ -45,7 +45,9 @@ const handleCloseTheForm=()=>{
 
 <template>
     <HeaderOne/>
-    <CreateUser @close-the-form="handleCloseTheForm" v-if="showCreateUser"/>
+    <Transition name="fade">
+        <CreateUser @close-the-form="handleCloseTheForm" v-if="showCreateUser"/>
+    </Transition>
     <main class="w-full py-5 px-10 min-h-screen">
         <div class="flex flex-col gap-10 mt-5 mb-5">
             <!-- the searching engine -->
@@ -70,7 +72,7 @@ const handleCloseTheForm=()=>{
                 <!--the grid container -->
                 <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mt-5">
                     <!-- sub elements with user information -->
-                    <div v-for="(user,inded) in userData" :key="index" class="w-full border flex flex-col items-center justify-center p-2 cursor-pointer h-52 transform transition duration-200 hover:shadow-lg hover:scale-105 rounded-sm bg-gray-50">
+                    <div v-for="(user,index) in userData" :key="index" class="w-full border flex flex-col items-center justify-center p-2 cursor-pointer h-52 transform transition duration-200 hover:shadow-lg hover:scale-105 rounded-sm bg-gray-50">
                         <UserCard :user="user"/>
                     </div>
                 </div>
@@ -78,3 +80,15 @@ const handleCloseTheForm=()=>{
         </div>
     </main>
 </template>
+
+<style>
+.fade-enter-active {
+    animation: bounce-in 0.5s;
+}
+
+.fade-leave-active {
+    animation: bounce-in 0.5s reverse;
+}
+
+
+</style>
