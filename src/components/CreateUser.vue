@@ -19,9 +19,9 @@ const emitClose=()=>{
 
     <Teleport to="body">
         <Transition name="popup">
-            <div class="fixed top-0 bottom-0 left-0 right-0 z-20 bg-gray-500 bg-opacity-50 flex items-center justify-center">
+            <div class="fixed top-0 bottom-0 left-0 right-0 z-20 bg-gray-500 bg-opacity-50 flex items-center justify-center ">
                 <!-- the container -->
-                <div class="bg-white opacity-100 w-1/2 md:w-1/3 rounded-sm shadow-lg py-3 relative">
+                <div class="bg-white opacity-100 w-80 sm:w-1/2 md:w-1/3 rounded-sm shadow-lg py-3 relative">
                     <!-- the title bar -->
                     <div class="w-full border-b border-gray-500 flex items-center justify-between px-2 py-1">
                         <!-- the title -->

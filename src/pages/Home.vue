@@ -1,7 +1,35 @@
 <script setup>
 import HeaderOne from '../components/HeaderOne.vue';
+import UserCard from '../components/UserCard.vue';
 import CreateUser from '../components/CreateUser.vue';
 import { ref } from 'vue';
+
+
+const userData=[
+    {
+        firstname:"nikodimos",
+        id:1,
+    },{
+        firstname:"Emanuel",
+        id:2,
+    },{
+        firstname:"Miki",
+        id:3,
+    },{
+        firstname:"Nati dorm",
+        id:4,
+    },{
+        firstname:"Nati man",
+        id:5,
+    },{
+        firstname:"Meron",
+        id:6,
+    },{
+        firstname:"Melos",
+        id:7,
+    }
+]
+
 
 const showCreateUser=ref(false)
 
@@ -40,8 +68,11 @@ const handleCloseTheForm=()=>{
                     </div>
                 </div>
                 <!--the grid container -->
-                <div>
+                <div class="w-full grid grid-cols-4 gap-5 mt-5">
                     <!-- sub elements with user information -->
+                    <div v-for="(user,inded) in userData" :key="index" class="w-full border flex flex-col items-center justify-center p-2 cursor-pointer h-52 transform transition duration-200 hover:shadow-lg hover:scale-105">
+                        <UserCard :user="user"/>
+                    </div>
                 </div>
             </div>
         </div>
