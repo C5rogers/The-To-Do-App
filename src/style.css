@@ -2,3 +2,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.image-holder {
+    @apply w-20 h-20 flex items-center justify-center bg-white border-gray-100 rounded-full;
+}
