@@ -3,9 +3,13 @@ import HeaderOne from '../components/HeaderOne.vue';
 import CreateUser from '../components/CreateUser.vue';
 import { ref } from 'vue';
 
-const showCreateUser=ref(true)
+const showCreateUser=ref(false)
 
 const toogleCreateUser=()=>{
+    showCreateUser.value=!showCreateUser.value
+}
+
+const handleCloseTheForm=()=>{
     showCreateUser.value=!showCreateUser.value
 }
 

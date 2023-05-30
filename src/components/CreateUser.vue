@@ -18,7 +18,7 @@ const emitClose=()=>{
 <template>
 
     <Teleport to="body">
-        <Transition name="create-user-form">
+        <Transition name="popup">
             <div class="fixed top-0 bottom-0 left-0 right-0 z-20 bg-gray-500 bg-opacity-50 flex items-center justify-center">
                 <!-- the container -->
                 <div class="bg-white opacity-100 w-1/2 md:w-1/3 rounded-sm shadow-lg py-3 relative">
@@ -61,3 +61,25 @@ const emitClose=()=>{
     </Teleport>
 
 </template>
+
+<style scoped>
+.popup-enter-active {
+    animation: bounce-in 0.5s;
+}
+
+.popup-leave-active {
+    animation: bounce-in 0.5s reverse;
+}
+
+@keyframes bounce-in {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+</style>
