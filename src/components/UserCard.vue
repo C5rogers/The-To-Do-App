@@ -15,7 +15,7 @@ const props=defineProps({
         <div class="flex items-center justify-center font-Roboto capitalize">{{ user.firstname }}</div>
     </div>
     <!-- the lower -->
-    <div class="w-full flex justify-end ">
+    <div class="w-full flex justify-end items-center">
         <ul class="flex gap-2 items-center">
             <li>
                 <button><i class="fa-solid fa-pen-nib text-xs"></i></button>

@@ -102,10 +102,10 @@ const handleAddTask=()=>{
             </div>
 
             <!-- the grid view -->
-            <div>
+            <div class="my-5 grid grid-cols-4 gap-5">
                 <!-- the grid childs -->
-                <div v-for="(task,index) in tasks" :key="index">
-                    <TaskCard :task="task.task"/>
+                <div v-for="(task,index) in tasks" :key="index" class="w-full relative h-52 border border-gray-200 bg-gray-50 rounded-md flex flex-col items-center justify-center">
+                    <TaskCard :Task="task"/>
                 </div>
             </div>
         </div>
