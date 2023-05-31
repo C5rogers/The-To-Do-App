@@ -74,7 +74,7 @@ const handleAddTask=()=>{
         <!-- the whole container -->
         <div class="flex flex-col gap-5 w-full h-full">
             <!-- the header one -->
-            <div class="w-full flex justify-between mt-3">
+            <div class="w-full flex flex-col gap-4 sm:gap-0 sm:flex-row justify-between mt-3">
                 <!-- the search one -->
                 <div>
                     <form @submit.prevent="handleSearchSubmission">
@@ -90,8 +90,8 @@ const handleAddTask=()=>{
                         <div class="flex gap-3 items-center">
                             <!-- the input -->
                             <div class="relative">
-                                <i class="fa fa-briefcase absolute text-sm top-2 left-2 text-gray-500"></i>
-                                <input type="text" name="task" placeholder="Add Task For The user" class="w-full outline-none border border-gray-300 pl-7 rounded-full py-1 pr-2 font-Roboto focus:bg-gray-100" v-model="task">
+                                <i class="fa fa-briefcase absolute text-sm top-3 left-2 text-gray-500"></i>
+                                <input type="text" name="task" placeholder="Add Task For The user" class="w-full outline-none border border-gray-300 pl-7 rounded-full py-2 pr-2 font-Roboto focus:bg-gray-100" v-model="task">
                             </div>
                             <div>
                                 <button class="p-2 border border-gray-300 flex items-center justify-center rounded-md transition duration-200  ease-in-out hover:bg-black hover:text-white"><i class="fa-solid fa-add"></i></button>
@@ -102,9 +102,9 @@ const handleAddTask=()=>{
             </div>
 
             <!-- the grid view -->
-            <div class="my-5 grid grid-cols-4 gap-5">
+            <div class="my-5 grid  sm:grid-cols-2 md:grid-cols-4 gap-5">
                 <!-- the grid childs -->
-                <div v-for="(task,index) in tasks" :key="index" class="w-full relative h-52 border border-gray-200 bg-gray-50 rounded-md flex flex-col items-center justify-center">
+                <div v-for="(task,index) in tasks" :key="index" class="w-full relative h-52 border border-gray-200 bg-gray-50 rounded-md flex flex-col items-center justify-center cursor-pointer transition transform duration-200 hover:scale-105 hover:shadow-lg ">
                     <TaskCard :Task="task"/>
                 </div>
             </div>

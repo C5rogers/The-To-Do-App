@@ -27,7 +27,7 @@ const props=defineProps({
 
     <!-- the bottom one -->
     <div class="w-full flex justify-end items-center">
-        <ul class="flex gap-2 items-center">
+        <ul class="flex gap-2 items-center pr-2">
             <li>
                 <button><i class="fa-solid fa-pen-nib text-xs"></i></button>
             </li>
