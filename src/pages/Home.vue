@@ -65,7 +65,7 @@ const handleCloseTheForm=()=>{
                 <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mt-5">
                     <!-- sub elements with user information -->
                     <div v-for="(user,index) in result && result.users" :key="index" class="w-full border flex flex-col items-center justify-center p-2 cursor-pointer h-52 transform transition duration-200 hover:shadow-lg hover:scale-105 rounded-sm bg-gray-50">
-                        <router-link :to="{name:'UserTasks',params:{id:user.id}}" class="w-full"><UserCard :user="user"/></router-link>     
+                        <UserCard :user="user"/>    
                     </div>
                 </div>
             </div>
