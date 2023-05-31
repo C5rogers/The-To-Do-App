@@ -1,8 +1,24 @@
 <script setup>
 import HeaderTwo from '../components/HeaderTwo.vue';
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { useQuery } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
 
-const name=ref('Natiman')
+
+
+const route=useRoute()
+
+const userId=route.params.id
+
+const name=ref("Natiman")
+
+
+
+
+
+
+// const name=ref('Natiman')
 
 
 const handleAddTask=()=>{
@@ -14,9 +30,9 @@ const handleAddTask=()=>{
     <HeaderTwo :name="name"/>
     <main class="w-full py-5 px-10 min-h-screen relative">
         <!-- the whole container -->
-        <div>
+        <div class="flex flex-col gap-5 w-full h-full">
             <!-- the header one -->
-            <div>
+            <div class="w-full flex justify-between mt-3">
                 <!-- the search one -->
                 <div>
                     <form @submit.prevent="handleSearchSubmission">
@@ -29,7 +45,16 @@ const handleAddTask=()=>{
                 <!-- the task creater -->
                 <div>
                     <form @submit.prevent="handleAddTask">
-                    
+                        <div class="flex gap-3 items-center">
+                            <!-- the input -->
+                            <div class="relative">
+                                <i class="fa fa-briefcase absolute text-sm top-2 left-2 text-gray-500"></i>
+                                <input type="text" name="task" placeholder="Add Task For The user" class="w-full outline-none border border-gray-300 pl-7 rounded-full py-1 pr-2 font-Roboto focus:bg-gray-100">
+                            </div>
+                            <div>
+                                <button class="p-2 border border-gray-300 flex items-center justify-center rounded-md transition duration-200  ease-in-out hover:bg-black hover:text-white"><i class="fa-solid fa-add"></i></button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

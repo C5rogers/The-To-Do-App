@@ -12,7 +12,7 @@ const props=defineProps({
         <!-- the image -->
         <div class="image-holder"><i class="fa-solid fa-user-circle text-4xl text-gray-900"></i></div>
         <!-- the user name -->
-        <div class="flex items-center justify-center font-Roboto">{{ user.firstname }}</div>
+        <div class="flex items-center justify-center font-Roboto capitalize">{{ user.firstname }}</div>
     </div>
     <!-- the lower -->
     <div class="w-full flex justify-end ">
