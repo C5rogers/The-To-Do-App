@@ -1,34 +1,20 @@
 <script setup>
+import { useQuery } from '@vue/apollo-composable'
 import HeaderOne from '../components/HeaderOne.vue';
 import UserCard from '../components/UserCard.vue';
 import CreateUser from '../components/CreateUser.vue';
 import { ref } from 'vue';
+import gql from 'graphql-tag'
 
 
-const userData=[
-    {
-        firstname:"nikodimos",
-        id:1,
-    },{
-        firstname:"Emanuel",
-        id:2,
-    },{
-        firstname:"Miki",
-        id:3,
-    },{
-        firstname:"Nati dorm",
-        id:4,
-    },{
-        firstname:"Nati man",
-        id:5,
-    },{
-        firstname:"Meron",
-        id:6,
-    },{
-        firstname:"Melos",
-        id:7,
-    }
-]
+ const {result,loading}=useQuery(gql`
+query getUser {
+  users {
+    firstname
+    id
+  }
+}
+`)
 
 
 const showCreateUser=ref(false)
@@ -60,7 +46,11 @@ const handleCloseTheForm=()=>{
                 </form>
             </div>
             <!-- the grid view -->
-            <div class="w-full flex flex-col px-5 ">
+
+            <!-- the loading animation is here -->
+            <div v-if="loading">loadding...</div>
+
+            <div class="w-full flex flex-col px-5 " v-else>
                 <!-- the add button -->
                 <div class="w-60 h-60 flex items-center justify-center bg-gray-100 border-gray-200 rounded-lg cursor-pointer transition transform hover:scale-105 hover:shadow-lg duration-200">
                     <div>
@@ -72,7 +62,7 @@ const handleCloseTheForm=()=>{
                 <!--the grid container -->
                 <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mt-5">
                     <!-- sub elements with user information -->
-                    <div v-for="(user,index) in userData" :key="index" class="w-full border flex flex-col items-center justify-center p-2 cursor-pointer h-52 transform transition duration-200 hover:shadow-lg hover:scale-105 rounded-sm bg-gray-50">
+                    <div v-for="(user,index) in result && result.users" :key="index" class="w-full border flex flex-col items-center justify-center p-2 cursor-pointer h-52 transform transition duration-200 hover:shadow-lg hover:scale-105 rounded-sm bg-gray-50">
                         <router-link :to="{name:'UserTasks',params:{id:user.id}}" class="w-full"><UserCard :user="user"/></router-link>     
                     </div>
                 </div>
