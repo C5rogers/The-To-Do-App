@@ -42,7 +42,7 @@ const emitClose=()=>{
 
                                 <!-- the form -->
                                 <form @submit.prevent="handleSubmission" class="flex flex-col gap-3 py-4">
-                                    <label class="font-Roboto text-sm font-bold">User Name:</label>
+                                    <label class="font-Roboto text-xs font-bold">User Name:</label>
                                     <div class="relative font-Roboto">
                                         <i class="fa-solid fa-user-circle absolute top-2 left-2 text-gray-500" ></i>
                                         <input type="text" name="username" placeholder="User Name" class="outline-none w-64 border border-gray-700 rounded-full pl-7 pr-2 py-1" v-model="userName" >

@@ -18,7 +18,16 @@ const goBack=()=>{
             <div>{{ name }}</div>
         </div>
         <div>
-            <button @click="goBack" class="flex items-center bg-black text-white px-2 py-1 rounded-full gap-2 transition duration-200 hover:shadow-lg"><i class="fa-solid fa-arrow-left"></i><span>Back</span></button>
+            <button id="button" @click="goBack" class="flex items-center bg-black text-white px-2 py-1 rounded-full gap-2 transition duration-200 hover:shadow-lg"><i class="fa-solid fa-arrow-left"></i><span>Back</span></button>
         </div>
     </header>
 </template>
+
+<style scoped>
+    #button>i{
+        transition: all ease-in-out .22s;
+    }
+    #button:hover>i{
+        transform: translateX(-5px);
+    }
+</style>
