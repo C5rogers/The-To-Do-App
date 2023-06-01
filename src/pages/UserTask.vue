@@ -14,53 +14,22 @@ const route=useRoute()
 
 const userId=route.params.id
 
-const name=ref("Natiman")
+const {result,loading,error}=useQuery(gql`
+    query getUser($id:Int!){
+            users_by_pk(id:$id){
+            firstname
+            id
+            todos{
+                task
+                done
+                id
+                }
+            }
+        }
+`,()=>({
+    id:userId
+}))
 
-const tasks=[
-    {
-        id:1,
-        user_id:1,
-        task:"go to school",
-        done:false
-    },{
-        id:2,
-        user_id:2,
-        task:"go to library",
-        done:true
-    },{
-        id:3,
-        user_id:4,
-        task:"go to church",
-        done:false
-    },{
-        id:4,
-        user_id:3,
-        task:"go to home",
-        done:true
-    },{
-        id:5,
-        user_id:8,
-        task:"comming from school and go to church",
-        done:false
-    },{
-        id:6,
-        user_id:9,
-        task:"playing game and plistation",
-        done:false
-    },{
-        id:7,
-        user_id:10,
-        task:"working dumpel",
-        done:false
-    },
-]
-
-
-
-
-
-
-// const name=ref('Natiman')
 
 
 const handleAddTask=()=>{
@@ -69,8 +38,9 @@ const handleAddTask=()=>{
 </script>
 
 <template>
-    <HeaderTwo :name="name"/>
+    <HeaderTwo :name="result && result.users_by_pk.firstname"/>
     <main class="w-full py-5 px-10 min-h-screen relative">
+        
         <!-- the whole container -->
         <div class="flex flex-col gap-5 w-full h-full">
             <!-- the header one -->
@@ -101,10 +71,15 @@ const handleAddTask=()=>{
                 </div>
             </div>
 
+                <!-- the loading animation -->
+            <div v-if="loading" class="w-full flex items-center justify-center h-96">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24"><circle cx="4" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsBounce0" attributeName="cy" begin="0;svgSpinners3DotsBounce1.end+0.25s" calcMode="spline" dur="0.6s" keySplines=".33,.66,.66,1;.33,0,.66,.33" values="12;6;12"/></circle><circle cx="12" cy="12" r="3" fill="currentColor"><animate attributeName="cy" begin="svgSpinners3DotsBounce0.begin+0.1s" calcMode="spline" dur="0.6s" keySplines=".33,.66,.66,1;.33,0,.66,.33" values="12;6;12"/></circle><circle cx="20" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsBounce1" attributeName="cy" begin="svgSpinners3DotsBounce0.begin+0.2s" calcMode="spline" dur="0.6s" keySplines=".33,.66,.66,1;.33,0,.66,.33" values="12;6;12"/></circle></svg>
+            </div>
+
             <!-- the grid view -->
-            <div class="my-5 grid  sm:grid-cols-2 md:grid-cols-4 gap-5">
+            <div class="my-5 grid  sm:grid-cols-2 md:grid-cols-4 gap-5" v-else>
                 <!-- the grid childs -->
-                <div v-for="(task,index) in tasks" :key="index" class="w-full relative h-52 border border-gray-200 bg-gray-50 rounded-md flex flex-col items-center justify-center cursor-pointer transition transform duration-200 hover:scale-105 hover:shadow-lg ">
+                <div v-for="(task,index) in result && result.users_by_pk.todos" :key="index" class="w-full relative h-52 border border-gray-200 bg-gray-50 rounded-md flex flex-col items-center justify-center cursor-pointer transition transform duration-200 hover:scale-105 hover:shadow-lg ">
                     <TaskCard :Task="task"/>
                 </div>
             </div>
