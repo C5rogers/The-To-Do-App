@@ -5,7 +5,11 @@ import { useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import TaskCard from '../components/TaskCard.vue'
+import ErrorPopup from '../components/ErrorPopup.vue';
 
+
+const showErrorPopup=ref(false)
+const errorMessage=ref('')
 
 
 const task=ref('')
@@ -33,12 +37,19 @@ const {result,loading,error}=useQuery(gql`
 
 
 const handleAddTask=()=>{
-    
+    if(task.value.length==0){
+        errorMessage.value="pleas fill the task first!"
+        showErrorPopup.value=!showErrorPopup.value
+        setTimeout(()=>{showErrorPopup.value=!showErrorPopup.value},4000)
+    }
 }
 </script>
 
 <template>
     <HeaderTwo :name="result && result.users_by_pk.firstname"/>
+    <Transition name="popup">
+        <ErrorPopup :message="errorMessage" v-if="showErrorPopup"/>
+    </Transition>
     <main class="w-full py-5 px-10 min-h-screen relative">
         
         <!-- the whole container -->

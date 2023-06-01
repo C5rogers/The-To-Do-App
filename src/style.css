@@ -17,3 +17,40 @@
         transform: scale(1);
     }
 }
+
+@keyframes horizontal-shaking {
+    0% {
+        transform: translateX(0)
+    }
+    25% {
+        transform: translateX(5px)
+    }
+    50% {
+        transform: translateX(-5px)
+    }
+    75% {
+        transform: translateX(5px)
+    }
+    100% {
+        transform: translateX(0)
+    }
+}
+
+.popup-enter-from,
+.popup-leave-to {
+    transform: translateY(-200px);
+}
+
+.popup-enter-to,
+.popup-leave-from {
+    transform: translateY(0);
+}
+
+.popup-enter-active,
+.popup-leave-active {
+    transition: all ease-out .30s;
+}
+
+.popup-enter-active {
+    animation: horizontal-shaking .22s;
+}
