@@ -1,13 +1,12 @@
 <script setup>
-import { useQuery } from '@vue/apollo-composable'
+import { useQuery,useSubscription } from '@vue/apollo-composable'
 import HeaderOne from '../components/HeaderOne.vue';
 import UserCard from '../components/UserCard.vue';
 import CreateUser from '../components/CreateUser.vue';
 import { ref } from 'vue';
 import gql from 'graphql-tag'
 
-
- const {result,loading}=useQuery(gql`
+ const {result,loading}=useSubscription(gql`
 query getUser {
   users {
     firstname
@@ -31,6 +30,7 @@ const handleCloseTheForm=()=>{
 
 <template>
     <HeaderOne/>
+
     <Transition name="fade">
         <CreateUser @close-the-form="handleCloseTheForm" v-if="showCreateUser"/>
     </Transition>

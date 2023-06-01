@@ -1,14 +1,62 @@
 <script setup>
 import { ref } from 'vue';
-import { Transition } from 'vue';
+import { useMutation } from '@vue/apollo-composable';
+import gql from 'graphql-tag';
 
 const userName=ref('')
 
 
+const getAllUser=gql`
+query getUser {
+  users {
+    firstname
+    id
+  }
+}
+`
+
+const errorMessage=ref('')
+
 const emit=defineEmits(['close-the-form'])
 
+const {mutate:createUser}=useMutation(gql`
+        mutation insertUser($firstname:String!){
+                insert_users(objects:[{firstname:$firstname}]){
+                    returning{
+                    firstname
+                    id
+                    }
+                }
+        }
+`,
+)
+
+
 const handleSubmission=()=>{
-    
+    if(userName.value.length==0){
+        errorMessage.value="please fill the user name"
+        setTimeout(()=>{
+            errorMessage.value=""
+        },4000)
+    }else{
+        createUser({
+            firstname:userName.value
+        }
+        // have some bug here
+        // ,{
+        //     update:(cache,{data:{createUser}})=>{
+        //         let data=cache.readQuery({query:getAllUser})
+        //         data={
+        //             ...data,
+        //             users:[
+        //                 ...data.users,
+        //                 createUser
+        //             ]
+        //         }
+        //         cache.writeQuery({ query: getAllUser, data })
+        //     }
+        )        
+    }
 }
 const emitClose=()=>{
     userName.value=''
@@ -18,7 +66,6 @@ const emitClose=()=>{
 </script>
 
 <template>
-
             <div class="fixed top-0 bottom-0 left-0 right-0 z-20 bg-gray-200 bg-opacity-50 flex items-center justify-center ">
                 <!-- the container -->
                     <div class="bg-white opacity-100 w-80 sm:w-1/2 md:w-1/3 rounded-sm shadow-lg py-3 px-5 relative">
@@ -46,6 +93,9 @@ const emitClose=()=>{
                                     <div class="relative font-Roboto">
                                         <i class="fa-solid fa-user-circle absolute top-2 left-2 text-gray-500" ></i>
                                         <input type="text" name="username" placeholder="User Name" class="outline-none w-64 border border-gray-700 rounded-full pl-7 pr-2 py-1" v-model="userName" >
+                                        <div class="text-xs text-red-400 font-Roboto px-3" v-if="errorMessage">
+                                            <p>{{ errorMessage }}</p>
+                                        </div>
                                     </div>
                                     <div>
                                         <input type="submit" name="create" value="Create" class="outline-none w-64 border border-gray-700 text-center rounded-full py-1 px-2 text-white font-bold font-Roboto bg-black cursor-pointer">
