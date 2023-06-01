@@ -2,7 +2,7 @@
 import HeaderTwo from '../components/HeaderTwo.vue';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { useQuery } from '@vue/apollo-composable'
+import { useQuery,useMutation,useSubscription } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import TaskCard from '../components/TaskCard.vue'
 import ErrorPopup from '../components/ErrorPopup.vue';
@@ -18,7 +18,7 @@ const route=useRoute()
 
 const userId=route.params.id
 
-const {result,loading,error}=useQuery(gql`
+const {result,loading,error}=useSubscription(gql`
     query getUser($id:Int!){
             users_by_pk(id:$id){
             firstname
@@ -34,6 +34,18 @@ const {result,loading,error}=useQuery(gql`
     id:userId
 }))
 
+const {mutate:createTask}=useMutation(gql`
+    mutation addTask($task:String!,$user_id:Int!,$done:Boolean!){
+    insert_todos(objects:[{user_id:$user_id,done:$done,task:$task}]){
+        returning{
+        id
+        task
+        done
+        }
+    }
+    }
+`)
+
 
 
 const handleAddTask=()=>{
@@ -41,6 +53,13 @@ const handleAddTask=()=>{
         errorMessage.value="pleas fill the task first!"
         showErrorPopup.value=!showErrorPopup.value
         setTimeout(()=>{showErrorPopup.value=!showErrorPopup.value},4000)
+    }else{
+        createTask({
+            user_id:userId,
+            done:false,
+            task:task.value
+        })
+        task.value=''
     }
 }
 </script>
