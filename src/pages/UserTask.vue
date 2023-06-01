@@ -46,6 +46,29 @@ const {mutate:createTask}=useMutation(gql`
     }
 `)
 
+const {mutate:updateTask}=useMutation(gql`
+    mutation updateTask($id:Int!,$done:Boolean!) {
+        update_todos_by_pk(pk_columns: {id: $id}, _set: {done: $done}) {
+            done
+            task
+            user{
+            firstname
+            id
+            }
+        }
+    }
+`)
+
+
+
+const updateTaskDone=(taskId,taskDone)=>{
+   const newTaskDone=!taskDone
+   updateTask({
+        id:taskId,
+        done:newTaskDone
+    })
+}
+
 
 
 const handleAddTask=()=>{
@@ -109,7 +132,7 @@ const handleAddTask=()=>{
             <!-- the grid view -->
             <div class="my-5 grid  sm:grid-cols-2 md:grid-cols-4 gap-5" v-else>
                 <!-- the grid childs -->
-                <div v-for="(task,index) in result && result.users_by_pk.todos" :key="index" class="w-full relative h-52 border border-gray-200 bg-gray-50 rounded-md flex flex-col items-center justify-center cursor-pointer transition transform duration-200 hover:scale-105 hover:shadow-lg ">
+                <div v-for="(task,index) in result && result.users_by_pk.todos" :key="index" class="w-full relative h-52 border border-gray-200 bg-gray-50 rounded-md flex flex-col items-center justify-center cursor-pointer transition transform duration-200 hover:scale-105 hover:shadow-lg " @dblclick="updateTaskDone(task.id,task.done)">
                     <TaskCard :Task="task"/>
                 </div>
             </div>
