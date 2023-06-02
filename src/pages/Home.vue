@@ -1,5 +1,6 @@
 <script setup>
 import { useQuery,useSubscription } from '@vue/apollo-composable'
+import ConfirmDelete from '../components/ConfirmDelete.vue';
 import HeaderOne from '../components/HeaderOne.vue';
 import UserCard from '../components/UserCard.vue';
 import CreateUser from '../components/CreateUser.vue';
@@ -16,6 +17,12 @@ query getUser {
 `)
 
 
+const deleteConfirmationData=ref({
+    title:'',
+    message:"",
+    to:''
+})
+const showConfirmDeleteUser=ref(false)
 const showCreateUser=ref(false)
 
 const toogleCreateUser=()=>{
@@ -27,16 +34,31 @@ const handleCloseTheForm=()=>{
 }
 
 const handleDeleteUser=(result)=>{
-    console.log(result.userId)
+    deleteConfirmationData.value.title="Deleting User"
+    deleteConfirmationData.value.message="Are You Shure To Delete User With The Id Of "+result.userId+" ?"
+    deleteConfirmationData.value.to=result.userId
+    showConfirmDeleteUser.value=true
 }
 const handleEditUser=(result)=>{
     console.log(result.userId)
+}
+
+const handleConfirmationResult=(result)=>{
+    showConfirmDeleteUser.value=false
+    
+
+
+
 }
 
 </script>
 
 <template>
     <HeaderOne/>
+
+    <Transition name="fade">
+        <ConfirmDelete :title="deleteConfirmationData.title" :message="deleteConfirmationData.message" :delete-who="deleteConfirmationData.to" v-if="showConfirmDeleteUser" @confirmation-result="handleConfirmationResult"/>
+    </Transition>
 
     <Transition name="fade">
         <CreateUser @close-the-form="handleCloseTheForm" v-if="showCreateUser"/>

@@ -8,9 +8,22 @@ const props=defineProps({
     deleteWho:Number
 })
 
+
+
+const emit=defineEmits(['confirmation-result'])
+
 const handleConfirmation=(e)=>{
     e.preventDefault();
-    console.log(e)
+    if(e.submitter.name==='yes'){
+        confimed.value=true
+    }
+
+    const isConfirmed=confimed.value
+    const userId=props.deleteWho
+        emit('confirmation-result',{
+            userId,
+            isConfirmed
+        })
 }
 </script>
 
