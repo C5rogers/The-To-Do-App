@@ -1,13 +1,17 @@
 <script setup>
-import { useQuery,useMutation } from '@apollo/client';
-import gql from '@apollo/client';
+// import { useMutation } from '@apollo/client';
+// import gql from '@apollo/client';
 import { ref } from 'vue';
 
 
 const errorMessage=ref('')
 const props=defineProps({
-    userId:Number
+    userId:Number,
+    userName:String
 })
+
+
+const editedUserName=ref(props.userName)
 const emit=defineEmits(['exit-edit-page'])
 
 
@@ -46,14 +50,14 @@ const emitClose=()=>{
                 <div class="flex flex-col items-center justify-center">
                     <!-- the image -->
                     <div class="image-holder">
-                        <i class="fa fa-briefcase text-4xl text-gray-900"></i>
+                        <i class="fa-solid fa-user-circle text-5xl text-black"></i>
                     </div>
                     <!-- the form -->
                     <form @submit.prevent="handleEdit" class="flex flex-col gap-3 py-4">
-                        <label class="font-Roboto text-xs font-bold">Task:</label>
+                        <label class="font-Roboto text-xs font-bold">User Name:</label>
                         <div class="relative font-Roboto">
-                            <i class="fa fa-briefcase absolute top-2 left-2 text-gray-500" ></i>
-                            <input type="text" name="task" placeholder="User Task" class="outline-none w-64 border border-gray-700 rounded-full pl-7 pr-2 py-1"  >
+                            <i class="fa-solid fa-user-circle absolute top-2 left-2 text-gray-500" ></i>
+                            <input type="text" name="task" placeholder="User Name" class="outline-none w-64 border border-gray-700 rounded-full pl-7 pr-2 py-1" v-model="editedUserName"  >
                             <div class="text-xs text-red-400 font-Roboto px-3" v-if="errorMessage">
                                 <p>{{ errorMessage }}</p>
                             </div>

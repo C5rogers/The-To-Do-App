@@ -7,13 +7,21 @@ import gql from 'graphql-tag'
 import TaskCard from '../components/TaskCard.vue'
 import ErrorPopup from '../components/ErrorPopup.vue';
 import ConfirmDelete from '../components/ConfirmDelete.vue';
+import EditTask from '../components/EditTask.vue';
 
 
+
+const forEditTask=ref({
+    id:'',
+    task:''
+})
 const forDeleteConfirmation=ref({
     title:'',
     message:'',
     to:''
 })
+
+const showEditTask=ref(false)
 const showDeleteConfirmation=ref(false)
 
 const showErrorPopup=ref(false)
@@ -103,7 +111,9 @@ const handleAddTask=()=>{
 }
 
 const handleEditTodo=(result)=>{
-
+    forEditTask.value.id=result.id
+    forEditTask.value.task=result.task
+    showEditTask.value=true
 }
 const handleDeleteTodo=(result)=>{
     forDeleteConfirmation.value.title="Deleting Todo"
@@ -121,10 +131,18 @@ const handleConfirmationResult=(result)=>{
         })
     }
 }
+
+
+const handleExitEdit=()=>{
+    showEditTask.value=false
+}
 </script>
 
 <template>
     <HeaderTwo :name="result && result.users_by_pk.firstname"/>
+    <Transition name="fade">
+        <EditTask :task-id="forEditTask.id" :task-message="forEditTask.task" @exit-edit-page="handleExitEdit" v-if="showEditTask"/>
+    </Transition>
     <Transition name="fade">
         <ConfirmDelete :title="forDeleteConfirmation.title" :message="forDeleteConfirmation.message" :delete-who="forDeleteConfirmation.to" v-if="showDeleteConfirmation" @confirmation-result="handleConfirmationResult"/>
     </Transition>

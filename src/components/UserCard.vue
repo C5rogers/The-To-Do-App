@@ -8,9 +8,10 @@ const props=defineProps({
 const emit=defineEmits(['delete-user','edit-user'])
 
 
-const editUser=(userId)=>{
+const editUser=(userId,username)=>{
     emit('edit-user',{
-        userId
+        userId,
+        username
     })
 }
 const deleteUser=(userId)=>{
@@ -36,7 +37,7 @@ const deleteUser=(userId)=>{
     <div class="w-full flex justify-end items-center">
         <ul class="flex gap-2 items-center">
             <li>
-                <button class="z-10" @click="editUser(user.id)"><i class="fa-solid fa-pen-nib text-xs"></i></button>
+                <button class="z-10" @click="editUser(user.id,user.firstname)"><i class="fa-solid fa-pen-nib text-xs"></i></button>
             </li>
             <li>
                 <button class="z-10" @click="deleteUser(user.id)"><i class="fa-solid fa-trash-can text-xs"></i></button>

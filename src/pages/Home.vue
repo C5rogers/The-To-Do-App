@@ -6,6 +6,7 @@ import UserCard from '../components/UserCard.vue';
 import CreateUser from '../components/CreateUser.vue';
 import { ref } from 'vue';
 import gql from 'graphql-tag'
+import EditUser from '../components/EditUser.vue';
 
  const {result,loading}=useSubscription(gql`
 query getUser {
@@ -31,6 +32,14 @@ const deleteConfirmationData=ref({
     message:"",
     to:''
 })
+
+
+const forEditUserPage=ref({
+    id:'',
+    username:''
+})
+
+const showUserEditPage=ref(false)
 const showConfirmDeleteUser=ref(false)
 const showCreateUser=ref(false)
 
@@ -49,7 +58,9 @@ const handleDeleteUser=(result)=>{
     showConfirmDeleteUser.value=true
 }
 const handleEditUser=(result)=>{
-    console.log(result.userId)
+    forEditUserPage.value.id=result.userId
+    forEditUserPage.value.username=result.username
+    showUserEditPage.value=true
    
 }
 
@@ -64,10 +75,18 @@ const handleConfirmationResult=(result)=>{
 
 }
 
+const handleExitEditpage=()=>{
+    showUserEditPage.value=false
+}
+
 </script>
 
 <template>
     <HeaderOne/>
+
+    <Transition name="fade">
+        <EditUser :user-id="forEditUserPage.id" :user-name="forEditUserPage.username" @exit-edit-page="handleExitEditpage" v-if="showUserEditPage"/>
+    </Transition>
 
     <Transition name="fade">
         <ConfirmDelete :title="deleteConfirmationData.title" :message="deleteConfirmationData.message" :delete-who="deleteConfirmationData.to" v-if="showConfirmDeleteUser" @confirmation-result="handleConfirmationResult"/>

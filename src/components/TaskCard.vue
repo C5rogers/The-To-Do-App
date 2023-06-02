@@ -6,9 +6,10 @@ const props=defineProps({
 const emit=defineEmits(['delete-todo','edit-todo'])
 
 
-const emitEdit=(id)=>{
+const emitEdit=(id,task)=>{
     emit('edit-todo',{
-        id
+        id,
+        task
     })
 }
 
@@ -44,7 +45,7 @@ const emitDelete=(id)=>{
     <div class="w-full flex justify-end items-center">
         <ul class="flex gap-2 items-center pr-2">
             <li>
-                <button @click="emitEdit(Task.id)"><i class="fa-solid fa-pen-nib text-xs"></i></button>
+                <button @click="emitEdit(Task.id,Task.task)"><i class="fa-solid fa-pen-nib text-xs"></i></button>
             </li>
             <li>
                 <button @click="emitDelete(Task.id)"><i class="fa-solid fa-trash-can text-xs"></i></button>
