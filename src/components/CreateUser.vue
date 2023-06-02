@@ -55,7 +55,9 @@ const handleSubmission=()=>{
         //         }
         //         cache.writeQuery({ query: getAllUser, data })
         //     }
-        )        
+        )   
+        userName.value=''
+        emit('close-the-form')     
     }
 }
 const emitClose=()=>{

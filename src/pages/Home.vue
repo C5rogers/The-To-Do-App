@@ -1,5 +1,5 @@
 <script setup>
-import { useQuery,useSubscription } from '@vue/apollo-composable'
+import { useQuery,useSubscription,useMutation } from '@vue/apollo-composable'
 import ConfirmDelete from '../components/ConfirmDelete.vue';
 import HeaderOne from '../components/HeaderOne.vue';
 import UserCard from '../components/UserCard.vue';
@@ -16,6 +16,15 @@ query getUser {
 }
 `)
 
+
+const {mutate:deleteTheUser}=useMutation(gql`
+    mutation deleteUser($id:Int!) {
+        delete_users_by_pk(id: $id) {
+            id
+        }
+    }
+
+`)
 
 const deleteConfirmationData=ref({
     title:'',
@@ -41,13 +50,17 @@ const handleDeleteUser=(result)=>{
 }
 const handleEditUser=(result)=>{
     console.log(result.userId)
+   
 }
 
 const handleConfirmationResult=(result)=>{
     showConfirmDeleteUser.value=false
-    
-
-
+    if(result.isConfirmed==true){
+        // now can send the delete user request to the server
+        const userId= parseInt(result.userId)
+        deleteTheUser({id:userId})
+       console.log("deleted Successfully")
+    }
 
 }
 

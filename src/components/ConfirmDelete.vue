@@ -31,7 +31,7 @@ const handleConfirmation=(e)=>{
     <!-- the confirmation -->
     <div class="fixed top-0 left-0 right-0 bottom-0 z-10 bg-gray-500 bg-opacity-50 flex items-center justify-center">
         <!-- the whole container -->
-        <div class="flex flex-col font-Roboto w-fit p-5 gap-3 bg-red-700 text-white rounded-lg shadow-lg">
+        <div class="flex flex-col font-Roboto w-fit p-5 gap-3 bg-red-600 text-white rounded-lg shadow-lg">
             <!-- the title -->
             <div class="text-2xl fotn-bold">
                 {{ title }}
@@ -44,8 +44,8 @@ const handleConfirmation=(e)=>{
             <div class="self-end mt-3">
                 <form @submit="handleConfirmation">
                     <div class="flex gap-4">
-                        <input type="submit" name="yes" value="Yes" class="cursor-pointer bg-black  px-2  rounded-sm">
-                        <input type="submit" name="no" value="No" class="cursor-pointer bg-green-500 text-black px-2 rounded-sm">
+                        <input type="submit" name="yes" value="Yes" class="cursor-pointer bg-black  px-2 transition duration-200 hover:shadow-lg  rounded-sm">
+                        <input type="submit" name="no" value="No" class="cursor-pointer bg-green-500 text-black px-2 rounded-sm transition duration-200 hover:shadow-lg">
                     </div>
                 </form>
             </div>
