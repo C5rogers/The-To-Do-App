@@ -114,7 +114,12 @@ const handleDeleteTodo=(result)=>{
 
 const handleConfirmationResult=(result)=>{
     showDeleteConfirmation.value=false
-    console.log(result.userId)
+    const todoId=parseInt(result.userId)
+    if(result.isConfirmed==true){
+        deleteTask({
+            id:todoId
+        })
+    }
 }
 </script>
 
