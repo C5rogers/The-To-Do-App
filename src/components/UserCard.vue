@@ -4,6 +4,21 @@ const props=defineProps({
     user:Object
 })
 
+
+const emit=defineEmits(['delete-user','edit-user'])
+
+
+const editUser=(userId)=>{
+    emit('edit-user',{
+        userId
+    })
+}
+const deleteUser=(userId)=>{
+    emit('delete-user',{
+        userId
+    })
+}
+
 </script>
 
 <template>
@@ -21,10 +36,10 @@ const props=defineProps({
     <div class="w-full flex justify-end items-center">
         <ul class="flex gap-2 items-center">
             <li>
-                <button class="z-10"><i class="fa-solid fa-pen-nib text-xs"></i></button>
+                <button class="z-10" @click="editUser(user.id)"><i class="fa-solid fa-pen-nib text-xs"></i></button>
             </li>
             <li>
-                <button class="z-10"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                <button class="z-10" @click="deleteUser(user.id)"><i class="fa-solid fa-trash-can text-xs"></i></button>
             </li>
         </ul>
     </div>
