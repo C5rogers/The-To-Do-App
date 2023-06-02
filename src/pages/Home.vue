@@ -114,15 +114,3 @@ const handleConfirmationResult=(result)=>{
         </div>
     </main>
 </template>
-
-<style>
-.fade-enter-active {
-    animation: bounce-in 0.5s;
-}
-
-.fade-leave-active {
-    animation: bounce-in 0.5s reverse;
-}
-
-
-</style>

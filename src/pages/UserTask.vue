@@ -6,7 +6,15 @@ import { useQuery,useMutation,useSubscription } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import TaskCard from '../components/TaskCard.vue'
 import ErrorPopup from '../components/ErrorPopup.vue';
+import ConfirmDelete from '../components/ConfirmDelete.vue';
 
+
+const forDeleteConfirmation=ref({
+    title:'',
+    message:'',
+    to:''
+})
+const showDeleteConfirmation=ref(false)
 
 const showErrorPopup=ref(false)
 const errorMessage=ref('')
@@ -59,6 +67,14 @@ const {mutate:updateTask}=useMutation(gql`
     }
 `)
 
+const {mutate:deleteTask}=useMutation(gql`
+    mutation deleteTask($id:Int!){
+        delete_todos_by_pk(id:$id){
+            id
+        }
+    }
+`)
+
 
 
 const updateTaskDone=(taskId,taskDone)=>{
@@ -85,10 +101,28 @@ const handleAddTask=()=>{
         task.value=''
     }
 }
+
+const handleEditTodo=(result)=>{
+
+}
+const handleDeleteTodo=(result)=>{
+    forDeleteConfirmation.value.title="Deleting Todo"
+    forDeleteConfirmation.value.message="Are You Shure To Delete Todo With The Id Of"+result.id+" ?"
+    forDeleteConfirmation.value.to=result.id
+    showDeleteConfirmation.value=true
+}
+
+const handleConfirmationResult=(result)=>{
+    showDeleteConfirmation.value=false
+    console.log(result.userId)
+}
 </script>
 
 <template>
     <HeaderTwo :name="result && result.users_by_pk.firstname"/>
+    <Transition name="fade">
+        <ConfirmDelete :title="forDeleteConfirmation.title" :message="forDeleteConfirmation.message" :delete-who="forDeleteConfirmation.to" v-if="showDeleteConfirmation" @confirmation-result="handleConfirmationResult"/>
+    </Transition>
     <Transition name="popup">
         <ErrorPopup :message="errorMessage" v-if="showErrorPopup"/>
     </Transition>
@@ -133,7 +167,7 @@ const handleAddTask=()=>{
             <div class="my-5 grid  sm:grid-cols-2 md:grid-cols-4 gap-5" v-else>
                 <!-- the grid childs -->
                 <div v-for="(task,index) in result && result.users_by_pk.todos" :key="index" class="w-full relative h-52 border border-gray-200 bg-gray-50 rounded-md flex flex-col items-center justify-center cursor-pointer transition transform duration-200 hover:scale-105 hover:shadow-lg " @dblclick="updateTaskDone(task.id,task.done)">
-                    <TaskCard :Task="task"/>
+                    <TaskCard :Task="task" @edit-todo="handleEditTodo" @delete-todo="handleDeleteTodo" />
                 </div>
             </div>
         </div>
