@@ -1,7 +1,21 @@
 <script setup>
-// import { useMutation } from '@apollo/client';
-// import gql from '@apollo/client';
+import { useMutation } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
 import { ref } from 'vue';
+
+
+const {mutate:updateTask}=useMutation(gql`
+    mutation updateTask($id:Int!,$task:String!){
+        update_todos_by_pk(pk_columns:{id:$id},_set:{task:$task}){
+            done
+            task
+            user{
+                firstname
+                id
+            }
+        }
+    }
+`)
 
 
 const errorMessage=ref('')
@@ -14,8 +28,22 @@ const editTask=ref(props.taskMessage)
 const emit=defineEmits(['exit-edit-page'])
 
 
-const handleEdit=()=>{
 
+
+const handleTaskEdit=()=>{
+    if(editTask.value.length==0){
+        errorMessage.value='Please Fill The Task!'
+    }else{
+        const taskId=props.taskId
+        const newTask=editTask.value
+        updateTask({
+            id:taskId,
+            task:newTask
+        })
+        errorMessage.value=''
+        editTask.value=''
+        emitClose()
+    }
 }
 
 
@@ -52,7 +80,7 @@ const emitClose=()=>{
                         <i class="fa fa-briefcase text-4xl text-gray-900"></i>
                     </div>
                     <!-- the form -->
-                    <form @submit.prevent="handleEdit" class="flex flex-col gap-3 py-4">
+                    <form @submit.prevent="handleTaskEdit" class="flex flex-col gap-3 py-4">
                         <label class="font-Roboto text-xs font-bold">Task:</label>
                         <div class="relative font-Roboto">
                             <i class="fa fa-briefcase absolute top-2 left-2 text-gray-500" ></i>
@@ -61,10 +89,10 @@ const emitClose=()=>{
                                 <p>{{ errorMessage }}</p>
                             </div>
                         </div>
+                        <div>
+                            <input type="submit" name="edit" value="Edit" class="outline-none w-64 border border-gray-700 text-center rounded-full py-1 px-2 text-white font-bold font-Roboto bg-black cursor-pointer">
+                        </div>
                     </form>
-                    <div>
-                        <input type="submit" name="edit" value="Edit" class="outline-none w-64 border border-gray-700 text-center rounded-full py-1 px-2 text-white font-bold font-Roboto bg-black cursor-pointer">
-                    </div>
                 </div>
             </div>
         </div>
