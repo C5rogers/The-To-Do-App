@@ -8,7 +8,7 @@ import { ref } from 'vue';
 import gql from 'graphql-tag'
 import EditUser from '../components/EditUser.vue';
 
- const {result,loading}=useSubscription(gql`
+ const {result,loading}=useQuery(gql`
 query getUser {
   users {
     firstname
@@ -16,6 +16,9 @@ query getUser {
   }
 }
 `)
+
+
+const searchInput=ref('')
 
 
 const {mutate:deleteTheUser}=useMutation(gql`
@@ -78,6 +81,22 @@ const handleExitEditpage=()=>{
     showUserEditPage.value=false
 }
 
+// have som bug here
+
+// const SearchUser=async()=>{
+//     console.log(searchInput.value)
+//     const {result,loading}=useQuery(gql`
+//     query searchingUser($username:String!) {
+//         users(where: {firstname: {_regex: $username}}){
+//             id
+//             firstname
+//         }
+//     }
+//     `,()=>({
+//         username:searchInput.value
+//     }))
+// }
+
 </script>
 
 <template>
@@ -101,7 +120,7 @@ const handleExitEditpage=()=>{
                 <form @submit.prevent="handleSearchSubmission">
                     <div class="relative">
                         <i class="fa-solid fa-search absolute top-3 left-2 text-gray-500 z-5"></i>
-                        <input type="text" placeholder="Search User..." class="pl-8 pr-2 py-2 outline-none rounded-full border border-gray-300 shadow-sm focus:bg-gray-100 font-Roboto">
+                        <input type="text" placeholder="Search User..." class="pl-8 pr-2 py-2 outline-none rounded-full border border-gray-300 shadow-sm focus:bg-gray-100 font-Roboto" v-model="searchInput" >
                     </div>
                 </form>
             </div>
