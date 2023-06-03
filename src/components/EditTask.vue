@@ -30,13 +30,16 @@ const emit=defineEmits(['exit-edit-page'])
 
 
 
-const handleTaskEdit=()=>{
+const handleTaskEdit=async()=>{
     if(editTask.value.length==0){
         errorMessage.value='Please Fill The Task!'
+        setTimeout(() => {
+            errorMessage.value=''
+        }, 4000);
     }else{
         const taskId=props.taskId
         const newTask=editTask.value
-        updateTask({
+        await updateTask({
             id:taskId,
             task:newTask
         })

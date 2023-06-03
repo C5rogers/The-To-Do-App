@@ -70,7 +70,6 @@ const handleConfirmationResult=(result)=>{
         // now can send the delete user request to the server
         const userId= parseInt(result.userId)
         deleteTheUser({id:userId})
-       console.log("deleted Successfully")
     }
 
 }
