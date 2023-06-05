@@ -13,7 +13,7 @@
                         <a href="https://github.com/C5rogers/The-To-Do-App"><i class="fa-brands fa-github"></i></a>
                     </li>
                     <li>
-                        <a href="https://www.figma.com/file/tJEIDu0UcmHV9r5CxofolF/To-Do-Web-Application?type=design&t=uBZzU49RFXrG22M2-6"><i class="fa-brands fa-figma"></i></a>
+                        <a href="https://www.figma.com/file/tJEIDu0UcmHV9r5CxofolF/To-Do-Web-Application?type=design&t=A0bIJG4gS2so8io7-6"><i class="fa-brands fa-figma"></i></a>
                     </li>
                 </ul>
             </div>
