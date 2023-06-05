@@ -2,7 +2,13 @@
 import { useMutation } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import { ref } from 'vue';
+import getAllUsersTask from '../querys/getAllUsersTask.gql'
 
+const props=defineProps({
+    taskId:Number,
+    taskMessage:String,
+    userId:Number
+})
 
 const {mutate:updateTask}=useMutation(gql`
     mutation updateTask($id:Int!,$task:String!){
@@ -15,16 +21,15 @@ const {mutate:updateTask}=useMutation(gql`
             }
         }
     }
-`)
+`,{
+    refetchQueries:[{query:getAllUsersTask,variables:{id:props.userId}}]
+})
 
 
 const showLoading=ref(false)
 
 const errorMessage=ref('')
-const props=defineProps({
-    taskId:Number,
-    taskMessage:String
-})
+
 
 const editTask=ref(props.taskMessage)
 const emit=defineEmits(['exit-edit-page'])

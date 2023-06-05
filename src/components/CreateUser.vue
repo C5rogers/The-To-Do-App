@@ -26,6 +26,11 @@ const {mutate:createUser}=useMutation(gql`
 }
 )
 
+const value=ref('')
+const vFocus={
+    mounted:(el)=>el.focus()
+}
+
 
 const handleSubmission=async()=>{
     if(userName.value.length==0){
@@ -79,7 +84,7 @@ const emitClose=()=>{
                                     <label class="font-Roboto text-xs font-bold">User Name:</label>
                                     <div class="relative font-Roboto">
                                         <i class="fa-solid fa-user-circle absolute top-2 left-2 text-gray-500" ></i>
-                                        <input type="text" name="username" placeholder="User Name" class="outline-none w-64 border border-gray-700 rounded-full pl-7 pr-2 py-1" v-model="userName" >
+                                        <input type="text" v-focus name="username" placeholder="User Name" class="outline-none w-64 border border-gray-700 rounded-full pl-7 pr-2 py-1 focus:bg-gray-200" v-model="userName" >
                                         <div class="text-xs text-red-400 font-Roboto px-3" v-if="errorMessage">
                                             <p>{{ errorMessage }}</p>
                                         </div>

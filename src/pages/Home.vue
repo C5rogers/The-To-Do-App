@@ -13,7 +13,6 @@ import getAllUser from '../querys/getAllUsers.gql'
 const {result,loading}=useQuery(getAllUser)
 
 
-const searchInput=ref('')
 
 
 const {mutate:deleteTheUser}=useMutation(gql`
@@ -78,21 +77,6 @@ const handleExitEditpage=()=>{
     showUserEditPage.value=false
 }
 
-// have som bug here
-
-// const SearchUser=async()=>{
-//     console.log(searchInput.value)
-//     const {result,loading}=useQuery(gql`
-//     query searchingUser($username:String!) {
-//         users(where: {firstname: {_regex: $username}}){
-//             id
-//             firstname
-//         }
-//     }
-//     `,()=>({
-//         username:searchInput.value
-//     }))
-// }
 
 </script>
 
@@ -112,17 +96,6 @@ const handleExitEditpage=()=>{
     </Transition>
     <main class="w-full py-5 px-10 min-h-screen">
         <div class="flex flex-col gap-10 mt-5 mb-5">
-            <!-- the searching engine -->
-            <div>
-                <form @submit.prevent="handleSearchSubmission">
-                    <div class="relative">
-                        <i class="fa-solid fa-search absolute top-3 left-2 text-gray-500 z-5"></i>
-                        <input type="text" placeholder="Search User..." class="pl-8 pr-2 py-2 outline-none rounded-full border border-gray-300 shadow-sm focus:bg-gray-100 font-Roboto" v-model="searchInput" >
-                    </div>
-                </form>
-            </div>
-            <!-- the grid view -->
-
             <!-- the loading animation is here -->
             <div v-if="loading" class="w-full flex items-center justify-center h-96">
                 <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24"><circle cx="4" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsBounce0" attributeName="cy" begin="0;svgSpinners3DotsBounce1.end+0.25s" calcMode="spline" dur="0.6s" keySplines=".33,.66,.66,1;.33,0,.66,.33" values="12;6;12"/></circle><circle cx="12" cy="12" r="3" fill="currentColor"><animate attributeName="cy" begin="svgSpinners3DotsBounce0.begin+0.1s" calcMode="spline" dur="0.6s" keySplines=".33,.66,.66,1;.33,0,.66,.33" values="12;6;12"/></circle><circle cx="20" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsBounce1" attributeName="cy" begin="svgSpinners3DotsBounce0.begin+0.2s" calcMode="spline" dur="0.6s" keySplines=".33,.66,.66,1;.33,0,.66,.33" values="12;6;12"/></circle></svg>

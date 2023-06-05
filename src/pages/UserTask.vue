@@ -14,7 +14,8 @@ import getAllUsersTask from '../querys/getAllUsersTask.gql'
 
 const forEditTask=ref({
     id:'',
-    task:''
+    task:'',
+    userId:''
 })
 const forDeleteConfirmation=ref({
     title:'',
@@ -30,7 +31,6 @@ const errorMessage=ref('')
 
 
 const task=ref('')
-const search=ref('')
 const route=useRoute()
 
 const userId=route.params.id
@@ -107,6 +107,7 @@ const handleAddTask=()=>{
 
 const handleEditTodo=(result)=>{
     forEditTask.value.id=result.id
+    forEditTask.value.userId=parseInt(userId)
     forEditTask.value.task=result.task
     showEditTask.value=true
 }
@@ -131,12 +132,18 @@ const handleConfirmationResult=(result)=>{
 const handleExitEdit=()=>{
     showEditTask.value=false
 }
+
+const value=ref('')
+const vFocus={
+    mounted:(el)=>el.focus()
+}
+
 </script>
 
 <template>
     <HeaderTwo :name="result && result.users_by_pk.firstname"/>
     <Transition name="fade">
-        <EditTask :task-id="forEditTask.id" :task-message="forEditTask.task" @exit-edit-page="handleExitEdit" v-if="showEditTask"/>
+        <EditTask :task-id="forEditTask.id" :task-message="forEditTask.task" :user-id="forEditTask.userId" @exit-edit-page="handleExitEdit" v-if="showEditTask"/>
     </Transition>
     <Transition name="fade">
         <ConfirmDelete :title="forDeleteConfirmation.title" :message="forDeleteConfirmation.message" :delete-who="forDeleteConfirmation.to" v-if="showDeleteConfirmation" @confirmation-result="handleConfirmationResult"/>
@@ -150,15 +157,6 @@ const handleExitEdit=()=>{
         <div class="flex flex-col gap-5 w-full h-full">
             <!-- the header one -->
             <div class="w-full flex flex-col gap-4 sm:gap-0 sm:flex-row justify-between mt-3">
-                <!-- the search one -->
-                <div>
-                    <form @submit.prevent="handleSearchSubmission">
-                        <div class="relative">
-                            <i class="fa-solid fa-search absolute top-3 left-2 text-gray-500 z-5"></i>
-                            <input type="text" placeholder="Search User..." class="pl-8 pr-2 py-2 outline-none rounded-full border border-gray-300 shadow-sm focus:bg-gray-100 font-Roboto" v-model="search">
-                        </div>
-                    </form>
-                </div>
                 <!-- the task creater -->
                 <div>
                     <form @submit.prevent="handleAddTask">
@@ -166,7 +164,7 @@ const handleExitEdit=()=>{
                             <!-- the input -->
                             <div class="relative">
                                 <i class="fa fa-briefcase absolute text-sm top-3 left-2 text-gray-500"></i>
-                                <input type="text" name="task" placeholder="Add Task For The user" class="w-full outline-none border border-gray-300 pl-7 rounded-full py-2 pr-2 font-Roboto focus:bg-gray-100" v-model="task">
+                                <input type="text" v-focus name="task" placeholder="Add Task For The user" class="w-full outline-none border border-gray-300 pl-7 rounded-full py-2 pr-2 font-Roboto focus:bg-gray-100" v-model="task">
                             </div>
                             <div>
                                 <button class="p-2 border border-gray-300 flex items-center justify-center rounded-md transition duration-200  ease-in-out hover:bg-black hover:text-white"><i class="fa-solid fa-add"></i></button>
