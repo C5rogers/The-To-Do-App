@@ -182,12 +182,12 @@ const handleExitEdit=()=>{
             </div>
 
             <!-- the grid view -->
-            <div class="my-5 grid  sm:grid-cols-2 md:grid-cols-4 gap-5" v-else>
-                <!-- the grid childs -->
-                <div v-for="(task,index) in result && result.users_by_pk.todos" :key="index" class="w-full relative h-52 border border-gray-200 bg-gray-50 rounded-md flex flex-col items-center justify-center cursor-pointer transition transform duration-200 hover:scale-105 hover:shadow-lg " @dblclick="updateTaskDone(task.id,task.done)">
+            <TransitionGroup tag="div" class="my-5 grid  sm:grid-cols-2 md:grid-cols-4 gap-5" name="cards"  v-else>
+                 <!-- the grid childs -->
+                 <div v-for="(task,index) in result && result.users_by_pk.todos" :key="index" class="w-full relative h-52 border border-gray-200 bg-gray-50 rounded-md flex flex-col items-center justify-center cursor-pointer transition transform duration-200 hover:scale-105 hover:shadow-lg " @dblclick="updateTaskDone(task.id,task.done)">
                     <TaskCard :Task="task" @edit-todo="handleEditTodo" @delete-todo="handleDeleteTodo" />
                 </div>
-            </div>
+            </TransitionGroup>
         </div>
     </main>
 </template>
