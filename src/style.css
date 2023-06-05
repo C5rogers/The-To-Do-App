@@ -68,3 +68,20 @@
 .fade-leave-active {
     animation: bounce-in 0.5s reverse;
 }
+
+.users-enter-from,
+.users-leave-to {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.users-enter-to,
+.users-leave-from {
+    opacity: 1;
+    transform: scale(100%);
+}
+
+.users-enter-active,
+.users-leave-active {
+    transition: all ease-out .30s;
+}
