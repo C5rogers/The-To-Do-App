@@ -8,15 +8,6 @@ const userName=ref('')
 const showLoading=ref(false)
 
 
-// const getAllUser=gql`
-// query getUser {
-//   users {
-//     firstname
-//     id
-//   }
-// }
-// `
-
 const errorMessage=ref('')
 
 const emit=defineEmits(['close-the-form'])

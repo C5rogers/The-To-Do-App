@@ -2,12 +2,13 @@
 import HeaderTwo from '../components/HeaderTwo.vue';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { useQuery,useMutation,useSubscription } from '@vue/apollo-composable'
+import { useQuery,useMutation } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import TaskCard from '../components/TaskCard.vue'
 import ErrorPopup from '../components/ErrorPopup.vue';
 import ConfirmDelete from '../components/ConfirmDelete.vue';
 import EditTask from '../components/EditTask.vue';
+import getAllUsersTask from '../querys/getAllUsersTask.gql'
 
 
 
@@ -34,19 +35,7 @@ const route=useRoute()
 
 const userId=route.params.id
 
-const {result,loading,error}=useSubscription(gql`
-    query getUser($id:Int!){
-            users_by_pk(id:$id){
-            firstname
-            id
-            todos{
-                task
-                done
-                id
-                }
-            }
-        }
-`,()=>({
+const {result,loading,error}=useQuery(getAllUsersTask,()=>({
     id:userId
 }))
 
@@ -60,7 +49,9 @@ const {mutate:createTask}=useMutation(gql`
         }
     }
     }
-`)
+`,{
+    refetchQueries:[{query:getAllUsersTask,variables:{id:userId}}]
+})
 
 const {mutate:updateTask}=useMutation(gql`
     mutation updateTask($id:Int!,$done:Boolean!) {
@@ -73,7 +64,9 @@ const {mutate:updateTask}=useMutation(gql`
             }
         }
     }
-`)
+`,{
+    refetchQueries:[{query:getAllUsersTask,variables:{id:userId}}]
+})
 
 const {mutate:deleteTask}=useMutation(gql`
     mutation deleteTask($id:Int!){
@@ -81,7 +74,9 @@ const {mutate:deleteTask}=useMutation(gql`
             id
         }
     }
-`)
+`,{
+    refetchQueries:[{query:getAllUsersTask,variables:{id:userId}}]
+})
 
 
 

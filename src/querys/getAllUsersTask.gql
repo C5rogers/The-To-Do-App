@@ -1,0 +1,11 @@
+query getUser($id:Int!){
+            users_by_pk(id:$id){
+            firstname
+            id
+            todos{
+                task
+                done
+                id
+                }
+            }
+        }
