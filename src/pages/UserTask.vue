@@ -162,12 +162,12 @@ const vFocus={
                     <form @submit.prevent="handleAddTask">
                         <div class="flex gap-3 items-center">
                             <!-- the input -->
+                            <div>
+                                <button class="p-2 border border-gray-300 flex items-center justify-center rounded-md transition duration-200  ease-in-out hover:bg-black hover:text-white"><i class="fa-solid fa-add"></i></button>
+                            </div>
                             <div class="relative">
                                 <i class="fa fa-briefcase absolute text-sm top-3 left-2 text-gray-500"></i>
                                 <input type="text" v-focus name="task" placeholder="Add Task For The user" class="w-full outline-none border border-gray-300 pl-7 rounded-full py-2 pr-2 font-Roboto focus:bg-gray-100" v-model="task">
-                            </div>
-                            <div>
-                                <button class="p-2 border border-gray-300 flex items-center justify-center rounded-md transition duration-200  ease-in-out hover:bg-black hover:text-white"><i class="fa-solid fa-add"></i></button>
                             </div>
                         </div>
                     </form>
