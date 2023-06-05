@@ -58,7 +58,7 @@ const emitClose=()=>{
 </script>
 
 <template>
-            <div class="fixed top-0 bottom-0 left-0 right-0 z-20 bg-gray-200 bg-opacity-50 flex items-center justify-center ">
+            <div class="fixed top-0 bottom-0 left-0 right-0 z-20 bg-gray-400 bg-opacity-50 flex items-center justify-center ">
                 <!-- the container -->
                     <div class="bg-white opacity-100 w-80 sm:w-1/2 md:w-1/3 rounded-sm shadow-lg py-3 px-5 relative">
                         <!-- the title bar -->
