@@ -2,19 +2,20 @@
 import { ref } from 'vue';
 import { useMutation } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
+import getAllUser from '../querys/getAllUsers.gql'
 
 const userName=ref('')
 const showLoading=ref(false)
 
 
-const getAllUser=gql`
-query getUser {
-  users {
-    firstname
-    id
-  }
-}
-`
+// const getAllUser=gql`
+// query getUser {
+//   users {
+//     firstname
+//     id
+//   }
+// }
+// `
 
 const errorMessage=ref('')
 
@@ -29,7 +30,9 @@ const {mutate:createUser}=useMutation(gql`
                     }
                 }
         }
-`,
+`,{
+    refetchQueries:[{query:getAllUser}]
+}
 )
 
 

@@ -1,0 +1,7 @@
+
+  query getUser{
+    users{
+        firstname
+        id
+    }
+  }

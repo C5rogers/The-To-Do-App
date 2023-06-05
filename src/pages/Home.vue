@@ -7,15 +7,10 @@ import CreateUser from '../components/CreateUser.vue';
 import { ref } from 'vue';
 import gql from 'graphql-tag'
 import EditUser from '../components/EditUser.vue';
+import getAllUser from '../querys/getAllUsers.gql'
 
- const {result,loading}=useQuery(gql`
-query getUser {
-  users {
-    firstname
-    id
-  }
-}
-`)
+
+const {result,loading}=useQuery(getAllUser)
 
 
 const searchInput=ref('')
@@ -28,7 +23,9 @@ const {mutate:deleteTheUser}=useMutation(gql`
         }
     }
 
-`)
+`,{
+    refetchQueries:[{query:getAllUser}]
+})
 
 const deleteConfirmationData=ref({
     title:'',
