@@ -13,7 +13,7 @@ const routes = [{
         component: () =>
             import ('../pages/UserTask.vue')
     }, {
-        path: '/:notFound',
+        path: "/:catchAll(.*)",
         name: 'NotFound',
         component: () =>
             import ('../pages/NotFound.vue')

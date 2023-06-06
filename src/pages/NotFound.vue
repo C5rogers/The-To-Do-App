@@ -7,7 +7,7 @@
         <div class="m-7 shadow-md bg-white flex flex-col  gap-5">
             <!-- the image -->
             <div class="flex w-60 justify-center items-center">
-                <img src="../images/404 Error with a cute animal-bro.png" alt="">
+                <img src="/images/pageNotFound.png" alt="">
             </div>
             <!-- the button -->
             <div class="w-full flex justify-center items-center py-2 px-4 bg-green-500 text-white rounded-sm font-Roboto font-bold">
