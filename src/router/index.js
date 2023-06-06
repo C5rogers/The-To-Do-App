@@ -12,6 +12,11 @@ const routes = [{
         name: 'UserTasks',
         component: () =>
             import ('../pages/UserTask.vue')
+    }, {
+        path: '/:notFound',
+        name: 'NotFound',
+        component: () =>
+            import ('../pages/NotFound.vue')
     }
 ]
 
