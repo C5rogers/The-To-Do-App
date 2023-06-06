@@ -9,9 +9,10 @@ import ErrorPopup from '../components/ErrorPopup.vue';
 import ConfirmDelete from '../components/ConfirmDelete.vue';
 import EditTask from '../components/EditTask.vue';
 import getAllUsersTask from '../querys/getAllUsersTask.gql'
+import EmptyVue from '../components/Empty.vue'
 
 
-
+const forEmpty=ref('Opps There Is No Task Given For This User Yet!')
 const forEditTask=ref({
     id:'',
     task:'',
@@ -180,12 +181,20 @@ const vFocus={
             </div>
 
             <!-- the grid view -->
-            <TransitionGroup tag="div" class="my-5 grid  sm:grid-cols-2 md:grid-cols-4 gap-5" name="cards"  v-else>
+            <TransitionGroup tag="div" class="my-5 grid  sm:grid-cols-2 md:grid-cols-4 gap-5" name="cards"  v-else-if="result.users_by_pk.todos.length>0">
                  <!-- the grid childs -->
                  <div v-for="(task,index) in result && result.users_by_pk.todos" :key="index" class="w-full relative h-52 border border-gray-200 bg-gray-50 rounded-md flex flex-col items-center justify-center cursor-pointer transition transform duration-200 hover:scale-105 hover:shadow-lg " @dblclick="updateTaskDone(task.id,task.done)">
                     <TaskCard :Task="task" @edit-todo="handleEditTodo" @delete-todo="handleDeleteTodo" />
                 </div>
             </TransitionGroup>
+
+            <!-- the empty vuew -->
+            <Transition name="cards" v-else>
+                <div  class="w-full h-full container m-auto flex  items-center justify-center gap-5">
+                    <EmptyVue :message="forEmpty"/>
+                </div>
+            </Transition>
+            
         </div>
     </main>
 </template>

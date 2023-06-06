@@ -8,8 +8,10 @@ import { ref } from 'vue';
 import gql from 'graphql-tag'
 import EditUser from '../components/EditUser.vue';
 import getAllUser from '../querys/getAllUsers.gql'
+import EmptyVue from '../components/Empty.vue';
 
 
+const forEmpty=ref("Opps There Is No User Registered Yet!")
 const {result,loading}=useQuery(getAllUser)
 
 
@@ -101,7 +103,7 @@ const handleExitEditpage=()=>{
                 <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24"><circle cx="4" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsBounce0" attributeName="cy" begin="0;svgSpinners3DotsBounce1.end+0.25s" calcMode="spline" dur="0.6s" keySplines=".33,.66,.66,1;.33,0,.66,.33" values="12;6;12"/></circle><circle cx="12" cy="12" r="3" fill="currentColor"><animate attributeName="cy" begin="svgSpinners3DotsBounce0.begin+0.1s" calcMode="spline" dur="0.6s" keySplines=".33,.66,.66,1;.33,0,.66,.33" values="12;6;12"/></circle><circle cx="20" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsBounce1" attributeName="cy" begin="svgSpinners3DotsBounce0.begin+0.2s" calcMode="spline" dur="0.6s" keySplines=".33,.66,.66,1;.33,0,.66,.33" values="12;6;12"/></circle></svg>
             </div>
 
-            <div class="w-full flex flex-col px-5 " v-else>
+            <div class="w-full flex flex-col px-5 " v-else-if="result.users.length>0">
                 <!-- the add button -->
                 <div class="w-60 h-60 flex items-center justify-center bg-gray-100 border-gray-200 rounded-lg cursor-pointer transition transform hover:scale-105 hover:shadow-lg duration-200">
                     <div>
@@ -118,6 +120,13 @@ const handleExitEditpage=()=>{
                     </div>
                 </TransitionGroup>
             </div>
+            <!-- the empty message -->
+            <Transition name="cards" v-else>
+                <div>
+                    <EmptyVue :message="forEmpty"/>
+                </div>
+            </Transition>
+            
         </div>
     </main>
 </template>
